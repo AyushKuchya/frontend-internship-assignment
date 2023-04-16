@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs';
+import { SubjectsService } from '../../core/services/subjects.service';
+import { Book } from 'src/app/core/models/book-response.model';
 
 @Component({
   selector: 'front-end-internship-assignment-home',
@@ -9,8 +11,10 @@ import { debounceTime, filter } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
   bookSearch: FormControl;
+  allBooks: Book[] = [];
+  subjectName = '';
 
-  constructor() {
+  constructor(private subjectsService: SubjectsService) {
     this.bookSearch = new FormControl('');
   }
 
@@ -28,6 +32,14 @@ export class HomeComponent implements OnInit {
         debounceTime(300),
       ).
       subscribe((value: string) => {
+        this.subjectName=value
+        this.subjectsService.getAllBooks(value).subscribe((data) => {
+          this.allBooks = data?.works;
+          // this.subjectsArray = data;
+        });
+        console.log(this.allBooks)
+       
       });
-  }
+      
+  } 
 }
