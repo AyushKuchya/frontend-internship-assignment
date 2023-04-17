@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   bookSearch: FormControl;
   allBooks: Book[] = [];
   subjectName = '';
+  isLoading: boolean =true
 
   constructor(private subjectsService: SubjectsService) {
     this.bookSearch = new FormControl('');
@@ -35,8 +36,10 @@ export class HomeComponent implements OnInit {
         this.subjectName=value
         this.subjectsService.getAllBooks(value).subscribe((data) => {
           this.allBooks = data?.works;
+          this.isLoading=false
           // this.subjectsArray = data;
         });
+        this.isLoading=true
         console.log(this.allBooks)
        
       });

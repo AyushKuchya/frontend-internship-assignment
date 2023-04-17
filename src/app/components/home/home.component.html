@@ -24,10 +24,17 @@
       </li>
     </ul>
   </section>
-  <div class="tw-flex-auto" *ngIf="allBooks.length > 0">
+  <div class="tw-flex-auto" *ngIf="allBooks.length > 0 && subjectName && !isLoading" >
     <front-end-internship-assignment-table-view
       [booksList]="allBooks"
       [subjectName]="subjectName"
     ></front-end-internship-assignment-table-view>
+  </div>
+  <div class="tw-flex-auto" *ngIf="allBooks.length === 0 && subjectName && !isLoading">
+    <img src="/assets/nobooks-ic.png" alt="No Books Found" style="width:50% height:50%;">
+    <h6 style="margin-left: 201px;"> No Books Available  </h6>
+  </div>
+  <div class="tw-flex-auto"  *ngIf="isLoading && subjectName">
+    <img src="/assets/Loading_icon.gif" alt="loading" style="width:50%">
   </div>
 </div>
